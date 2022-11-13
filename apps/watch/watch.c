@@ -12,20 +12,21 @@
 #include "hardware/adc.h"
 #include "pico/stdlib.h"
 
+void dbgOnScreen(UWORD *img, const char *msg, int delay);
+
 int main(void) {
+    /**
+     * It's just a copied example code. To be sure everything works as expected.
+     */
     if (DEV_Module_Init() != 0) {
         return -1;
     }
-    adc_init();
-    adc_gpio_init(29);
-    adc_select_input(3);
 
     // LCD Init
     printf("1.28inch LCD demo...\r\n");
     LCD_1IN28_Init(HORIZONTAL);
     LCD_1IN28_Clear(WHITE);
-    DEV_SET_PWM(60);
-    // LCD_SetBacklight(1023);
+    DEV_SET_PWM(1);
 
     UDOUBLE Imagesize = LCD_1IN28_HEIGHT * LCD_1IN28_WIDTH * 2;
     UWORD *BlackImage;
@@ -41,10 +42,10 @@ int main(void) {
     Paint_SetRotate(ROTATE_0);
     Paint_Clear(WHITE);
 
-    // /* GUI */
-    printf("drawing...\r\n");
-    // /*2.Drawing on the image*/
+    dbgOnScreen(BlackImage, "LCD Initialized", 1000);
+
 #if 1
+    dbgOnScreen(BlackImage, "Try first routine", 1000);
     Paint_DrawPoint(50, 41, BLACK, DOT_PIXEL_1X1, DOT_FILL_RIGHTUP); // 240 240
     Paint_DrawPoint(50, 46, BLACK, DOT_PIXEL_2X2, DOT_FILL_RIGHTUP);
     Paint_DrawPoint(50, 51, BLACK, DOT_PIXEL_3X3, DOT_FILL_RIGHTUP);
@@ -70,20 +71,16 @@ int main(void) {
     // /*3.Refresh the picture in RAM to LCD*/
     LCD_1IN28_Display(BlackImage);
     DEV_Delay_ms(1000);
-
-#endif
-#if 1
-    // Paint_DrawImage(gImage_1inch3_1, 0, 0, 240, 240);
-    LCD_1IN28_Display(BlackImage);
-    DEV_Delay_ms(1000);
 #endif
 
 #if 1
-
     float acc[3], gyro[3];
     unsigned int tim_count = 0;
+
+    dbgOnScreen(BlackImage, "Preinit QMI8658", 1000);
     QMI8658_init();
     printf("QMI8658_init\r\n");
+    dbgOnScreen(BlackImage, "Initialized QMI8658", 1000);
 
     while (true) {
         const float conversion_factor = 3.3f / (1 << 12) * 2;
@@ -98,6 +95,7 @@ int main(void) {
                gyro[0], gyro[1], gyro[2]);
 
         printf("tim_count = %d\r\n", tim_count);
+
         Paint_DrawString_EN(30, 50, "ACC_X = ", &Font16, WHITE, BLACK);
         Paint_DrawString_EN(30, 75, "ACC_Y = ", &Font16, WHITE, BLACK);
         Paint_DrawString_EN(30, 100, "ACC_Z = ", &Font16, WHITE, BLACK);
@@ -127,4 +125,12 @@ int main(void) {
 
     DEV_Module_Exit();
     return 0;
+}
+
+void dbgOnScreen(UWORD *img, const char *msg, int delay) {
+    Paint_Clear(WHITE);
+    Paint_DrawString_EN(30, 50, msg, &Font20, 0x000f, 0xfff0);
+    LCD_1IN28_Display(img);
+    DEV_Delay_ms(delay);
+    Paint_Clear(WHITE);
 }

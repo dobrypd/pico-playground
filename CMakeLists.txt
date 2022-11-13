@@ -4,7 +4,7 @@ include(cmake/pico_sdk_import.cmake)
 
 project(
   Pico_Watch
-  VERSION 1.0.0
+  VERSION 0.1.0
   LANGUAGES C CXX ASM)
 
 set(CMAKE_C_STANDARD 11)

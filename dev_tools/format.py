@@ -10,7 +10,7 @@ import os
 
 FORMATTERS = {
     "clang-format": {
-        "exec": "clang-format -i {0}",
+        "exec": "clang-format -style=file -i {0}",
         "exts": [".cpp", ".hpp", ".h", ".cxx", ".c", ".cc", ".inl"],
         "fn_p": ".*",
     },
