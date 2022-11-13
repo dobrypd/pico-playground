@@ -29,12 +29,12 @@
 #ifndef _DEV_CONFIG_H_
 #define _DEV_CONFIG_H_
 
-#include "stdio.h"
-#include "pico/stdlib.h"
 #include "hardware/adc.h"
-#include "hardware/spi.h"
 #include "hardware/i2c.h"
 #include "hardware/pwm.h"
+#include "hardware/spi.h"
+#include "pico/stdlib.h"
+#include "stdio.h"
 
 /**
  * data
@@ -56,11 +56,11 @@
 #define LCD_RST_PIN 12
 #define LCD_BL_PIN 25
 
-#define DEV_SDA_PIN     (6)
-#define DEV_SCL_PIN     (7)
+#define DEV_SDA_PIN (6)
+#define DEV_SCL_PIN (7)
 
-#define BAT_ADC_PIN     (29)
-#define BAR_CHANNEL     (3)
+#define BAT_ADC_PIN (29)
+#define BAR_CHANNEL (3)
 
 /*------------------------------------------------------------------------------------------------------*/
 
@@ -82,11 +82,12 @@ void DEV_Delay_us(uint32_t xus);
 
 void DEV_I2C_Write_Byte(uint8_t addr, uint8_t reg, uint8_t Value);
 void DEV_I2C_Write_nByte(uint8_t addr, uint8_t *pData, uint32_t Len);
-void DEV_I2C_Write_Register(uint8_t addr,uint8_t reg, uint16_t value);
+void DEV_I2C_Write_Register(uint8_t addr, uint8_t reg, uint16_t value);
 
 uint8_t DEV_I2C_Read_Byte(uint8_t addr, uint8_t reg);
-void DEV_I2C_Read_Register(uint8_t addr,uint8_t reg, uint16_t *value);
-void DEV_I2C_Read_nByte(uint8_t addr, uint8_t reg, uint8_t *pData, uint32_t Len);
+void DEV_I2C_Read_Register(uint8_t addr, uint8_t reg, uint16_t *value);
+void DEV_I2C_Read_nByte(uint8_t addr, uint8_t reg, uint8_t *pData,
+                        uint32_t Len);
 
 void DEV_SET_PWM(uint8_t Value);
 
