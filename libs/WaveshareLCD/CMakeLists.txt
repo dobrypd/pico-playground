@@ -7,6 +7,8 @@ target_include_directories(WaveshareLCD
 
 target_sources(WaveshareLCD
     PUBLIC
+        ${CMAKE_CURRENT_LIST_DIR}/include/LCD_1in28.h
+    PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/src/LCD_1in28.c
 )
 

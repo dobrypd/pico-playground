@@ -1,7 +1,11 @@
-# RP2040 watch
+# Raspberry Pi Pico watch
 
 Watch application for
 Raspberry Pi Pico RP2040, with 1.28" 240x240 LCD display. Like [this one](https://www.spotpear.com/index.php/index/study/detail/id/761.html).
+
+* Microcontroller RP2040
+* LCD display GC9A01A
+* IMU QMI8658C
 
 ## How to build
 

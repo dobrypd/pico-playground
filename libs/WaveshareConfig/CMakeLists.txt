@@ -7,6 +7,9 @@ target_include_directories(WaveshareConfig
 
 target_sources(WaveshareConfig
     PUBLIC
+        ${CMAKE_CURRENT_LIST_DIR}/include/Debug.h
+        ${CMAKE_CURRENT_LIST_DIR}/include/DEV_Config.h
+    PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/src/DEV_Config.c
 )
 
