@@ -28,3 +28,31 @@ $ cmake ..
 ```bash
 $ make -j $(nproc --all)
 ```
+
+## Development
+
+### Create environment
+
+```bash
+$ python3 -m venv venv
+$ . venv/bin/activate
+$ pip install -r dev_tools/requirements.txt
+```
+
+#### Source code formatting
+
+```bash
+
+```
+
+#### Testing
+
+```bash
+$ #TODO:
+```
+
+#### Documentation
+
+```bash
+$ #TODO:
+```
