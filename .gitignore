@@ -451,3 +451,5 @@ MigrationBackup/
 build
 build/*
 
+venv
+*.pyc

@@ -4,17 +4,16 @@
 #include <stdio.h>
 
 #include "DEV_Config.h"
-#include "LCD_1in28.h"
 #include "Fonts/fonts.h"
-#include "QMI8658.h"
 #include "GUI_Paint.h"
+#include "LCD_1in28.h"
+#include "QMI8658.h"
 
 #include "hardware/adc.h"
 #include "pico/stdlib.h"
 
 int main(void) {
-    if (DEV_Module_Init() != 0)
-    {
+    if (DEV_Module_Init() != 0) {
         return -1;
     }
     adc_init();
@@ -30,13 +29,13 @@ int main(void) {
 
     UDOUBLE Imagesize = LCD_1IN28_HEIGHT * LCD_1IN28_WIDTH * 2;
     UWORD *BlackImage;
-    if ((BlackImage = (UWORD *)malloc(Imagesize)) == NULL)
-    {
+    if ((BlackImage = (UWORD *)malloc(Imagesize)) == NULL) {
         printf("Failed to apply for black memory...\r\n");
         exit(0);
     }
     // /*1.Create a new image cache named IMAGE_RGB and fill it with white*/
-    Paint_NewImage((UBYTE *)BlackImage, LCD_1IN28.WIDTH, LCD_1IN28.HEIGHT, 0, WHITE);
+    Paint_NewImage((UBYTE *)BlackImage, LCD_1IN28.WIDTH, LCD_1IN28.HEIGHT, 0,
+                   WHITE);
     Paint_SetScale(65);
     Paint_Clear(WHITE);
     Paint_SetRotate(ROTATE_0);
@@ -74,7 +73,7 @@ int main(void) {
 
 #endif
 #if 1
-    //Paint_DrawImage(gImage_1inch3_1, 0, 0, 240, 240);
+    // Paint_DrawImage(gImage_1inch3_1, 0, 0, 240, 240);
     LCD_1IN28_Display(BlackImage);
     DEV_Delay_ms(1000);
 #endif
@@ -86,15 +85,17 @@ int main(void) {
     QMI8658_init();
     printf("QMI8658_init\r\n");
 
-    while (true)
-    {
+    while (true) {
         const float conversion_factor = 3.3f / (1 << 12) * 2;
         uint16_t result = adc_read();
-        printf("Raw value: 0x%03x, voltage: %f V\n", result, result * conversion_factor);
+        printf("Raw value: 0x%03x, voltage: %f V\n", result,
+               result * conversion_factor);
         Paint_Clear(WHITE);
         QMI8658_read_xyz(acc, gyro, &tim_count);
-        printf("acc_x   = %4.3fmg , acc_y  = %4.3fmg , acc_z  = %4.3fmg\r\n", acc[0], acc[1], acc[2]);
-        printf("gyro_x  = %4.3fdps, gyro_y = %4.3fdps, gyro_z = %4.3fdps\r\n", gyro[0], gyro[1], gyro[2]);
+        printf("acc_x   = %4.3fmg , acc_y  = %4.3fmg , acc_z  = %4.3fmg\r\n",
+               acc[0], acc[1], acc[2]);
+        printf("gyro_x  = %4.3fdps, gyro_y = %4.3fdps, gyro_z = %4.3fdps\r\n",
+               gyro[0], gyro[1], gyro[2]);
 
         printf("tim_count = %d\r\n", tim_count);
         Paint_DrawString_EN(30, 50, "ACC_X = ", &Font16, WHITE, BLACK);
@@ -111,7 +112,8 @@ int main(void) {
         Paint_DrawNum(120, 150, gyro[1], &Font16, 2, BLACK, WHITE);
         Paint_DrawNum(120, 175, gyro[2], &Font16, 2, BLACK, WHITE);
         Paint_DrawString_EN(50, 200, "BAT(V)=", &Font16, WHITE, BLACK);
-        Paint_DrawNum(130, 200, result * conversion_factor, &Font16, 2, BLACK, WHITE);
+        Paint_DrawNum(130, 200, result * conversion_factor, &Font16, 2, BLACK,
+                      WHITE);
 
         LCD_1IN28_Display(BlackImage);
         DEV_Delay_ms(100);

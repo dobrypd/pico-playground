@@ -1,18 +1,16 @@
-add_executable(watch
-        watch.c
-)
+add_executable(watch watch.c)
 
-#target_link_libraries(main examples LCD QMI8658 GUI Fonts Config pico_stdlib   )
-target_link_libraries(watch
-        pico_stdlib
-        hardware_i2c
-        hardware_spi
-        STMicroelectronicsFonts
-        WaveshareConfig
-        WaveshareGUI
-        WaveshareLCD
-        WaveshareQMI8658
-)
+# target_link_libraries(main examples LCD QMI8658 GUI Fonts Config pico_stdlib )
+target_link_libraries(
+  watch
+  pico_stdlib
+  hardware_i2c
+  hardware_spi
+  STMicroelectronicsFonts
+  WaveshareConfig
+  WaveshareGUI
+  WaveshareLCD
+  WaveshareQMI8658)
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(watch)
